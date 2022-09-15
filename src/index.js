@@ -21,10 +21,10 @@ function onInputSearch(event) {
         fetchCountries(countryName).then(country => {
             if (country.length > 10) {
                 Notiflix.Notify.info(
-            'Too many matches found. Please enter a more specific name.',
-            {
-              position: 'center-top',
-            }
+                    'Too many matches found. Please enter a more specific name.',
+                    {
+                        position: 'center-top',
+                    }
                 );
                 return;
             }
@@ -33,16 +33,15 @@ function onInputSearch(event) {
             } else if (country.length > 1 && country.length <= 10) {
                 countriesList.insertAdjacentHTML('beforeend', country.map(country => markupForMoreCountries(country)).join(''));
             }
-        })
-            .catch(error => {
-                Notiflix.Notify.failure('Oops, there is no country with that name',
-                    {
-            position: 'center-top',
-                });
-                return error;
-            })
+        }).catch(onFetchError);
 }
 };
+
+function onFetchError() {
+  Notiflix.Notify.failure('Oops, there is no country with that name', {
+    position: 'center-top',
+  });
+}
 
 function clearOutput() {
     countriesList.innerHTML = '';
